@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 
 const userSchema = new Schema(
     {
@@ -34,7 +35,7 @@ userSchema.pre("save", async function (next) {
         return next()
     }
     else {
-        this.password = bcrypt.hash(this.password, 10)
+        this.password = await bcrypt.hash(this.password, 10)
         next()
     }
 })
