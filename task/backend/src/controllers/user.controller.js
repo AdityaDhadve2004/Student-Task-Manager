@@ -8,10 +8,17 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 const generateAccessAndRefreshTokens = async (userId) => {
     try {
         const user = await User.findById(userId)
+
+        if (!user) { throw new ApiError(404, "User not found") };
+
         const accessToken = user.generateAccessToken();
+
         const refreshToken = user.generateRefreshToken();
+
         user.refreshToken = refreshToken
+
         await user.save({ validateBeforeSave: false })
+        
         return { refreshToken, accessToken }
 
     } catch (error) {
@@ -24,7 +31,7 @@ const registerUser = asyncHandler(
     async (req, res) => {
         const { username, email, password } = req.body;
 
-        if (!username  || !email || !password) {
+        if (!username || !email || !password) {
             throw new ApiError(400, "All fields are required")
         }
 
@@ -38,7 +45,7 @@ const registerUser = asyncHandler(
             throw new ApiError(409, "User already exists")
         }
 
-        const avatarLocalePath = req.file?.avatar[0]?.path
+        const avatarLocalePath = req.file?.path
 
         if (!avatarLocalePath) {
             throw new ApiError(400, "Avatar file is required")
@@ -66,7 +73,7 @@ const registerUser = asyncHandler(
         }
 
         return res.status(201).json(
-            new ApiResponse(200, registeredUser, "User registered Successfully")
+            new ApiResponse(201, registeredUser, "User registered Successfully")
         )
 
     }
@@ -77,9 +84,10 @@ const loginUser = asyncHandler(
 
         const { username, email, password } = req.body;
 
-        if (!username || !email || !password) {
-            throw new ApiError(400, "All fields are required")
+        if ((!username && !email) || !password) {
+            throw new ApiError(400, "Username or Email and password are required");
         }
+
 
         const user = await User.findOne(
             {
@@ -105,7 +113,9 @@ const loginUser = asyncHandler(
 
         const options = {
             httpOnly: true,
-            secure: true
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict"
+
         }
 
         return res
@@ -130,7 +140,7 @@ const getCurrentUser = asyncHandler(
         return res
             .status(200)
             .json(
-                new ApiResponse(200, req.user, "User fetched successfully")
+                new ApiResponse(200, req?.user, "User fetched successfully")
             )
 
 
@@ -166,4 +176,4 @@ const logoutUser = asyncHandler(
     }
 )
 
-export {registerUser,loginUser,logoutUser,getCurrentUser}
+export { registerUser, loginUser, logoutUser, getCurrentUser }
