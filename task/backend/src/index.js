@@ -1,6 +1,7 @@
 import connectDB from "./db/connect.js";
 import {app} from './app.js'
-import cors from 'cors'
+import dotenv from "dotenv"
+dotenv.config()
 
 
 
