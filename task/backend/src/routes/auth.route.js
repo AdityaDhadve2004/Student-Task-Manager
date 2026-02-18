@@ -1,22 +1,12 @@
 import express from "express"
 import { verifyJWT } from "../middlewares/auth.js"
+import { asyncHandler } from "../utils/asyncHandler.js"
+import { getCurrentUser } from "../controllers/user.controller.js"
 
 const router = express.Router()
 
 
-router.get("/me", verifyJWT, (req, res) => {
-  res.status(200).json({
-    success: true,
-    user: req.user
-  })
-})
+router.route("/me").get(verifyJWT,getCurrentUser)
 
-
-router.route("/me").get(verifyJWT, (req, res) => {
-  return res.status(200).json({
-    success: true,
-    user: req.user
-  })
-})
 
 export default router

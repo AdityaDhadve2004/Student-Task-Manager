@@ -1,3 +1,4 @@
+import mongoose, { isValidObjectId } from "mongoose";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js";
@@ -5,26 +6,17 @@ import { Task } from "../models/task.model.js"
 
 const createTask = asyncHandler(
     async (req, res) => {
-        const { title, description, dueDate, priority } = req.body;
 
-        if (
-            !title?.trim() ||
-            !description?.trim() ||
-            !priority?.trim() ||
-            !dueDate
-        ) {
-            throw new ApiError(400, "All fields are required");
-        }
-
+        const { title, description, date, priority, time } = req.body;
+        console.log(req.body);
 
         const task = await Task.create({
             title,
             description,
-            dueDate,
+            dueDate: date,
             priority,
-            status: "pending",
+            time,
             owner: req.user._id
-
         })
 
         const taskCreated = await Task.findById(task._id)
@@ -49,7 +41,7 @@ const getAllTasks = asyncHandler(async (req, res) => {
     const tasks = await Task.aggregate([
         {
             $match: {
-                owner : new mongoose.Types.ObjectId(req.user._id)
+                owner: new mongoose.Types.ObjectId(req.user._id)
 
             }
         },
@@ -213,5 +205,41 @@ const deleteTask = asyncHandler(
     }
 )
 
-export { createTask, getTask, updateTask, deleteTask,getAllTasks }
+
+const toggleTaskStatus = asyncHandler(
+    async (req, res) => {
+        const { taskId } = req.body
+        console.log(taskId);
+
+        const valid = isValidObjectId(taskId)
+
+        if (!valid) {
+            throw new ApiError(400, "Invalid TaskId")
+        }
+
+        const task = await Task.findById(taskId)
+
+        if (!task) {
+            throw new ApiError(400, "Task Not Found")
+        }
+
+        if (task.status === "pending") {
+            task.status = "completed"
+            await task.save({ validateBeforeSave: false })
+        }
+        else {
+            task.status = "pending"
+            await task.save({ validateBeforeSave: false })
+        }
+
+        const updatedTask = await Task.findById(taskId)
+
+
+
+        return res.status(200)
+            .json(new ApiResponse(200, updatedTask, "Task Toggles Successfully"))
+    }
+)
+
+export { createTask, getTask, updateTask, deleteTask, getAllTasks, toggleTaskStatus }
 

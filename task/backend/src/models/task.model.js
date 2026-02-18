@@ -10,6 +10,10 @@ const taskSchema = new Schema({
         type: String,
         required: true
     },
+    time :{
+        type: String,
+        required : true
+    },
     dueDate: {
         type: Date,
         required: true
@@ -19,6 +23,7 @@ const taskSchema = new Schema({
         required: true
     },
     status: {
+        default : "pending",
         type: String,
         required: true
     },
