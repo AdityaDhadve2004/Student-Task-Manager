@@ -17,7 +17,7 @@ function App() {
         <Route index element={<LandingPage />} />
         <Route path="/login" element={<Login />} action={actionLogin} />
         <Route path="/signup" element={<Signup />} action={signUpAction} />
-        <Route path="/dashboard" element={<DashBoardLayout />} loader={dashBoardLoader}>
+        <Route path="/dashboard" element={<DashBoardLayout />} id = "dashboard"loader={dashBoardLoader}>
           <Route index element={<NullLayout />} />
           <Route path="/dashboard/tasks" element={<Usertasks />} loader={taskLoader} />
           <Route path="/dashboard/task-form" element={<Taskform />} action={newTaskAction} />

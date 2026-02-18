@@ -1,9 +1,9 @@
-import { NavLink } from "react-router-dom"
+import { NavLink, useRouteLoaderData } from "react-router-dom"
 import MainLogo from "../images/MainLogo.jpg"
 
 export default function Navbar(prop) {
-
-    console.log(prop.user)
+    const { userJsonData } = useRouteLoaderData("dashboard")
+    
     return (
         <div className="w-64 h-screen bg-white border-r flex flex-col justify-between p-5">
 
@@ -60,12 +60,12 @@ export default function Navbar(prop) {
             {/* Bottom User Section */}
             <div className="flex items-center gap-3 p-3 border-t">
                 <img
-                    src={prop.user.data.avatar}
+                    src={userJsonData.data.avatar}
                     alt="User"
                     className="w-10 h-10 rounded-full"
                 />
                 <div>
-                    <p className="text-sm font-medium">{prop.user.data.username}</p>
+                    <p className="text-sm font-medium">{userJsonData.data.username}</p>
                     <p className="text-xs text-gray-500">Pro Plan</p>
                 </div>
             </div>

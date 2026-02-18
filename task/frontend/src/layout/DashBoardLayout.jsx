@@ -21,16 +21,13 @@ export async function loader() {
 
 
 export default function DashboardLayout() {
-  const { userJsonData, taskJsonData } = useLoaderData()
-  console.log(userJsonData, taskJsonData)
-
-
+ 
   return (
     <div className="flex min-h-screen">
-      <Navbar user={userJsonData} />
+      <Navbar  />
 
       <div className="flex-1 bg-gray-50 p-8">
-        <Home task={taskJsonData} user={userJsonData}  />
+        <Home   />
         <div className="mt-6">
           <Outlet/>
         </div>

@@ -1,12 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useRouteLoaderData } from "react-router-dom";
 import { Bell, Plus, CheckCircle2, Clock, TrendingUp } from "lucide-react"
 
 
 
 
 export default function Home(prop) {
-    console.log(prop.task)
-   // console.log(typeof(prop.task.data.totalTasks),typeof(prop.task.data.completed))
+    const { taskJsonData, userJsonData } = useRouteLoaderData("dashboard")
+    console.log(taskJsonData.data)
+
     return (
         <>
 
@@ -14,7 +15,7 @@ export default function Home(prop) {
                 <div className="flex items-center justify-between">
                     <div>
                         <h1 className="text-3xl font-semibold text-gray-900">
-                            Good morning, {prop.user.data.username}!
+                            Good morning, {userJsonData.data.username}!
                         </h1>
                         <p className="text-gray-500 mt-1">
                             Here's what you need to focus on today.
@@ -43,7 +44,7 @@ export default function Home(prop) {
                     <div className="bg-white rounded-2xl p-6 shadow-sm border flex justify-between items-center">
                         <div>
                             <p className="text-gray-500 text-sm">Tasks Completed</p>
-                            <h2 className="text-3xl font-semibold mt-2">{prop.task.data.completed}</h2>
+                            <h2 className="text-3xl font-semibold mt-2">{taskJsonData.data.completed}</h2>
                         </div>
                         <CheckCircle2 className="text-emerald-500" size={26} />
                     </div>
@@ -51,7 +52,7 @@ export default function Home(prop) {
                     <div className="bg-white rounded-2xl p-6 shadow-sm border flex justify-between items-center">
                         <div>
                             <p className="text-gray-500 text-sm">Pending Today</p>
-                            <h2 className="text-3xl font-semibold mt-2">{prop.task.data.pending}</h2>
+                            <h2 className="text-3xl font-semibold mt-2">{taskJsonData.data.pending}</h2>
                         </div>
                         <Clock className="text-amber-500" size={26} />
                     </div>
@@ -59,7 +60,8 @@ export default function Home(prop) {
                     <div className="bg-white rounded-2xl p-6 shadow-sm border flex justify-between items-center">
                         <div>
                             <p className="text-gray-500 text-sm">Productivity</p>
-                            <h2 className="text-3xl font-semibold mt-2">{(Number(prop.task.data.completed)/Number(prop.task.data.totalTasks)) * 100}</h2>
+                            <h2 className="text-3xl font-semibold mt-2">
+                                {(Number(taskJsonData.data.completed) === 0 && Number(taskJsonData.data.totalTasks) === 0) ? "0" : (Number(taskJsonData.data.completed) / Number(taskJsonData.data.totalTasks)) * 100}</h2>
                         </div>
                         <TrendingUp className="text-emerald-500" size={26} />
                     </div>
@@ -67,7 +69,7 @@ export default function Home(prop) {
                 </div>
 
             </div>
-           
+
 
         </>
     )
