@@ -1,28 +1,27 @@
 import { Form, Link } from "react-router-dom"
 import MainLogo from "../images/MainLogo.jpg"
 import MockImage from "../images/MockImage.png"
-import createUser from "../api"
-
-export async function ActionLogin({ request }) {
+import {createUser} from "../api"
+import {redirect} from "react-router-dom"
+export async function signUpAction({ request }) {
     const formData = await request.formData()
-
+    const data = new FormData()
+    data.append('username', formData.get('username'))
+    data.append('email', formData.get('email'))
+    data.append('password', formData.get('password'))
+    data.append('avatar', formData.get('avatar'))  
     
-    const username = formData.get("username")
-    const email = formData.get("email")
-    const password = formData.get("password")
-    const avatar = formData.get("avatar")
-    console.log({username,email,password,avatar})
-    const data = {username,email,password,avatar}
-
     const res = await createUser(data)
 
     if (!res.ok) {
-        console.log("Signup failed")
+        const error = await res.json()
+        console.log("Signup failed:", error)
         return null
     }
-
-    else{
-        console.log(res);
+    else {
+        const result = await res.json()
+        console.log("Signup success:", result)
+        return redirect("/login",{replace:true})
     }
 }
 

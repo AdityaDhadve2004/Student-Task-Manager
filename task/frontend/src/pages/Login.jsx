@@ -2,7 +2,26 @@ import { Link } from "react-router-dom"
 import { Form } from "react-router-dom"
 import MainLogo from "../images/MainLogo.jpg"
 import MockImage from "../images/MockImage.png"
+import { loginUser } from "../api"
+import {redirect} from "react-router-dom"
 
+export async function actionLogin({ request }) {
+    const formData = await request.formData()
+    const jsonData = Object.fromEntries(formData)
+    const res = await loginUser(jsonData)
+
+    if (!res.ok) {
+        const error = await res.json()
+        console.log("Signup failed:", error)
+        return null
+    }
+    else {
+        const result = await res.json()
+        return redirect("/dashboard",{replace:true})   
+    }
+
+
+}
 
 
 export default function LoginPage() {
@@ -14,7 +33,7 @@ export default function LoginPage() {
 
 
                 <div className="flex items-center gap-2 mb-10">
-                    <div className="w-8 h-8 bg-blue-600 rounded-lg"><img src={MainLogo} alt="" srcset="" /></div>
+                    <div className="w-8 h-8 bg-blue-600 rounded-lg"><img src={MainLogo} alt="" /></div>
                     <h1 className="text-xl font-semibold">DayTask</h1>
                 </div>
 
@@ -73,7 +92,7 @@ export default function LoginPage() {
                 <img
                     src={MockImage}
                     alt="Workspace"
-                    
+
                 />
             </div>
         </div>
