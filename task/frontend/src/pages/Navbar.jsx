@@ -1,8 +1,9 @@
 import { NavLink, useRouteLoaderData } from "react-router-dom"
 import MainLogo from "../images/MainLogo.jpg"
 
-export default function Navbar(prop) {
+export default function Navbar() {
     const { userJsonData } = useRouteLoaderData("dashboard")
+    
     
     return (
         <div className="w-64 h-screen bg-white border-r flex flex-col justify-between p-5">
@@ -30,6 +31,7 @@ export default function Navbar(prop) {
 
                     <NavLink
                         to="/dashboard/tasks"
+                        state={{route : "/dashboard/tasks"}}
                         className={({ isActive }) =>
                             `flex items-center gap-3 px-4 py-3 rounded-lg transition-all
               ${isActive

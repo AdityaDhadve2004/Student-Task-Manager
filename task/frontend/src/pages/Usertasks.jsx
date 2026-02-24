@@ -1,7 +1,6 @@
 import { getAllUserTask, toggleUserTaskStatus, deleteUserTask } from "../api"
-import { Form, useLoaderData, useRevalidator, useSearchParams, redirect, useLocation } from "react-router-dom"
+import { Form, useLoaderData, useRevalidator, useSearchParams, redirect } from "react-router-dom"
 import { X } from "lucide-react"
-import { useState } from "react"
 import { updateUserTask } from "../api"
 
 

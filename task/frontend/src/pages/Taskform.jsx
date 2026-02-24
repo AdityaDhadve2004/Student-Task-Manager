@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Form,redirect } from "react-router-dom"
+import { Form,Link,redirect } from "react-router-dom"
 import { Calendar, Clock, ArrowLeft, Plus } from "lucide-react"
 import { createUserTask } from "../api"
 
@@ -44,9 +44,11 @@ export default function Taskform() {
 
       {/* Header */}
       <div className="flex items-center gap-3">
+        <Link to={".."} relative="path">
         <button className="p-2 rounded-lg border">
           <ArrowLeft size={16} />
         </button>
+        </Link>
         <h2 className="text-lg font-semibold">Add New Task</h2>
       </div>
 
