@@ -21,7 +21,7 @@ export async function signUpAction({ request }) {
     else {
         const result = await res.json()
         console.log("Signup success:", result)
-        return redirect("/login",{replace:true})
+        return redirect("/login")
     }
 }
 

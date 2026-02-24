@@ -100,3 +100,11 @@ export async function updateUserTask(id, data) {
     })
     return res
 }
+
+export async function logoutUser(){
+    const res = await fetch("http://localhost:3000/api/v1/users/logout",{
+        method : "POST",
+        credentials : "include"
+    })
+    return res
+}

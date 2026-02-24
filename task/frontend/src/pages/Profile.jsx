@@ -1,13 +1,36 @@
-import { useLoaderData } from "react-router-dom";
-import { getCurrentUser } from "../api"
+import { useLoaderData,useNavigate } from "react-router-dom";
+import { getCurrentUser, logoutUser } from "../api"
 export async function loader() {
   const res = await getCurrentUser();
   return res
 
 }
+ async function logout() {
+  const navigate = useNavigate()
+  const res = await logoutUser()
+  if (!res.ok) {
+    console.log("Something went wrong")
+  }
+  else {
+    navigate("/login")
+  }
+}
 
 export default function Profile() {
+  const navigate = useNavigate()
   const res = useLoaderData();
+  async function logout() {
+  const res = await logoutUser()
+  if (!res.ok) {
+    console.log("Something went wrong")
+  }
+  else {
+    navigate("/login")
+  }
+}
+
+  
+  
   console.log(res.data);
   return (
     <div className="flex gap-8 p-8 bg-gray-50 min-h-screen">
@@ -96,7 +119,7 @@ export default function Profile() {
 
           {/* Logout */}
           <div className="mt-6 flex justify-end">
-            <button className="bg-red-500 text-white px-4 py-2 rounded-lg">
+            <button onClick={logout} className="bg-red-500 text-white px-4 py-2 rounded-lg">
               Logout
             </button>
           </div>

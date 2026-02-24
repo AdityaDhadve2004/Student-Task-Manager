@@ -136,6 +136,10 @@ export default function Usertasks() {
                                 {task.time}
                             </span>
 
+                            <span className="text-xs text-black-400">
+                                {task.dueDate.toString().slice(0,10)}
+                            </span>
+
 
                             <button
                                 onClick={(e) => {
@@ -184,21 +188,45 @@ export default function Usertasks() {
                             {selectedTask && (
                                 <Form method="POST">
                                     <div className="p-4 space-y-4">
+
+                                        {/* Title */}
                                         <input
                                             className="w-full border rounded-lg p-2"
                                             defaultValue={selectedTask.title}
                                             name="title"
                                         />
 
+                                        {/* Description */}
                                         <textarea
                                             className="w-full border rounded-lg p-2"
                                             defaultValue={selectedTask.description}
                                             name="description"
                                         />
 
+                                        {/* Time */}
+                                        <input
+                                            type="time"
+                                            name="time"
+                                            defaultValue={selectedTask.time}
+                                            className="w-full border rounded-lg p-2"
+                                        />
+
+                                        {/* Priority */}
+                                        <select
+                                            name="priority"
+                                            defaultValue={selectedTask.priority}
+                                            className="w-full border rounded-lg p-2"
+                                        >
+                                            <option value="low">Low Priority</option>
+                                            <option value="medium">Medium Priority</option>
+                                            <option value="high">High Priority</option>
+                                        </select>
+
+                                        {/* Submit */}
                                         <button className="w-full bg-emerald-500 text-white py-2 rounded-lg">
                                             Save Changes
                                         </button>
+
                                     </div>
                                 </Form>
                             )}

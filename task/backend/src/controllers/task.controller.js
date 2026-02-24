@@ -123,7 +123,7 @@ const getTask = asyncHandler(
 
 const updateTask = asyncHandler(
     async (req, res) => {
-        const { title, description } = req.body;
+        const { title, description,time,priority } = req.body;
 
         const { taskId } = req.params;
 
@@ -154,6 +154,8 @@ const updateTask = asyncHandler(
             $set: {
                 title,
                 description,
+                time,
+                priority,
             }
         }, {
             new: true,
