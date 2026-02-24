@@ -14,13 +14,10 @@ export async function signUpAction({ request }) {
     const res = await createUser(data)
 
     if (!res.ok) {
-        const error = await res.json()
-        console.log("Signup failed:", error)
-        return null
+        const data = await res.json()
+        console.log("Signup failed:", data.error)
     }
     else {
-        const result = await res.json()
-        console.log("Signup success:", result)
         return redirect("/login")
     }
 }

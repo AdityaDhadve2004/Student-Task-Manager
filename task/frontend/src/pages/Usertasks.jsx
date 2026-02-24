@@ -48,8 +48,6 @@ export default function Usertasks() {
         })
     }
 
-
-
     async function toggleTask(id) {
         const updatedTask = await toggleUserTaskStatus(id)
         console.log(updatedTask);
@@ -74,7 +72,8 @@ export default function Usertasks() {
     return (
         <>
             <div className="space-y-3">
-                {tasks.map(task => (
+
+                {tasks.map(task => (  
                     <div
                         onClick={() => openEditor(task)}
                         key={task._id}

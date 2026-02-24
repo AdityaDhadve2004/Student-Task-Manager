@@ -11,9 +11,8 @@ export async function actionLogin({ request }) {
     const res = await loginUser(jsonData)
 
     if (!res.ok) {
-        const error = await res.json()
-        console.log("Signup failed:", error)
-        return null
+        const data = await res.json()
+        console.log("Login failed:", data.error)   
     }
     else {
         const result = await res.json()

@@ -1,5 +1,7 @@
+const BASEURL = import.meta.env.VITE_API_URL
+
 export async function createUser(formData) {
-    const res = await fetch("http://localhost:3000/api/v1/users/register", {
+    const res = await fetch(`${BASEURL}/api/v1/users/register`, {
         method: "POST",
         body: formData,
         credentials: "include"
@@ -7,7 +9,7 @@ export async function createUser(formData) {
     return res
 }
 export async function loginUser(formData) {
-    const res = await fetch("http://localhost:3000/api/v1/users/login", {
+    const res = await fetch(`${BASEURL}/api/v1/users/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -20,7 +22,7 @@ export async function loginUser(formData) {
 
 
 export async function authUser() {
-    const res = await fetch("http://localhost:3000/api/v1/auth/me", {
+    const res = await fetch(`${BASEURL}/api/v1/auth/me`, {
         method: "GET",
         credentials: "include"
     })
@@ -29,7 +31,7 @@ export async function authUser() {
 }
 
 export async function createUserTask(formData) {
-    const res = await fetch("http://localhost:3000/api/v1/tasks/", {
+    const res = await fetch(`${BASEURL}/api/v1/tasks/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -41,7 +43,7 @@ export async function createUserTask(formData) {
 }
 
 export async function getAllUserTask() {
-    const res = await fetch("http://localhost:3000/api/v1/tasks/", {
+    const res = await fetch(`${BASEURL}/api/v1/tasks/`, {
         method: "GET",
         credentials: "include",
     })
@@ -49,7 +51,7 @@ export async function getAllUserTask() {
 }
 
 export async function toggleUserTaskStatus(id) {
-    const res = await fetch("http://localhost:3000/api/v1/tasks/", {
+    const res = await fetch(`${BASEURL}/api/v1/tasks/`, {
         method: "PATCH",
         credentials: "include",
         headers: {
@@ -62,7 +64,7 @@ export async function toggleUserTaskStatus(id) {
 }
 
 export async function getDashBoardTasks() {
-    const res = await fetch("http://localhost:3000/api/v1/dashboard/", {
+    const res = await fetch(`${BASEURL}/api/v1/dashboard/`, {
         method: "GET",
         credentials: "include"
     })
@@ -71,7 +73,7 @@ export async function getDashBoardTasks() {
 }
 
 export async function deleteUserTask(id) {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks/${id}`, {
+    const res = await fetch(`${BASEURL}/api/v1/tasks/${id}`, {
         method: "DELETE",
         credentials: "include",
     })
@@ -80,7 +82,7 @@ export async function deleteUserTask(id) {
 }
 
 export async function getCurrentUser() {
-    const res = await fetch("http://localhost:3000/api/v1/users/current-user", {
+    const res = await fetch(`${BASEURL}/api/v1/users/current-user`, {
         method: "GET",
         credentials: "include",
     })
@@ -90,7 +92,7 @@ export async function getCurrentUser() {
 }
 
 export async function updateUserTask(id, data) {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks/${id}`, {
+    const res = await fetch(`${BASEURL}/api/v1/tasks/${id}`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -102,7 +104,7 @@ export async function updateUserTask(id, data) {
 }
 
 export async function logoutUser(){
-    const res = await fetch("http://localhost:3000/api/v1/users/logout",{
+    const res = await fetch(`${BASEURL}/api/v1/users/logout`,{
         method : "POST",
         credentials : "include"
     })
