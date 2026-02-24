@@ -24,7 +24,7 @@ export async function authUser() {
         method: "GET",
         credentials: "include"
     })
-      
+
     return res
 }
 
@@ -66,6 +66,37 @@ export async function getDashBoardTasks() {
         method: "GET",
         credentials: "include"
     })
-    
+
+    return res
+}
+
+export async function deleteUserTask(id) {
+    const res = await fetch(`http://localhost:3000/api/v1/tasks/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+    })
+
+    return res
+}
+
+export async function getCurrentUser() {
+    const res = await fetch("http://localhost:3000/api/v1/users/current-user", {
+        method: "GET",
+        credentials: "include",
+    })
+
+    const data = await res.json()
+    return data
+}
+
+export async function updateUserTask(id, data) {
+    const res = await fetch(`http://localhost:3000/api/v1/tasks/${id}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        credentials: "include"
+    })
     return res
 }

@@ -7,8 +7,9 @@ import Home from "./pages/Home"
 import RootLayout, { rootLoader } from "./layout/RootLayout"
 import Taskform, { newTaskAction } from "./pages/Taskform"
 import Usertasks, { loader as taskLoader } from "./pages/Usertasks"
-import Profile from "./pages/Profile"
+import Profile,{loader as userLoader} from "./pages/Profile"
 import NullLayout from "./layout/NullLayout"
+import { updateAction } from "./pages/Usertasks"
 
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(
@@ -19,9 +20,9 @@ function App() {
         <Route path="/signup" element={<Signup />} action={signUpAction} />
         <Route path="/dashboard" element={<DashBoardLayout />} id = "dashboard"loader={dashBoardLoader}>
           <Route index element={<NullLayout />} />
-          <Route path="/dashboard/tasks" element={<Usertasks />} loader={taskLoader} />
+          <Route path="/dashboard/tasks" element={<Usertasks />} loader={taskLoader} action={updateAction} />
           <Route path="/dashboard/task-form" element={<Taskform />} action={newTaskAction} />
-          <Route path="/dashboard/profile" element={<Profile />} />
+          <Route path="/dashboard/profile" element={<Profile />} loader={userLoader}/>
 
 
         </Route>
