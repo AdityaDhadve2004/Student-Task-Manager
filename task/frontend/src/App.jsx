@@ -2,7 +2,7 @@ import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } 
 import LandingPage from "./pages/Landingpage"
 import Login, { actionLogin } from "./pages/Login"
 import Signup, { signUpAction } from "./pages/Signup"
-import DashBoardLayout, { loader as dashBoardLoader } from "./layout/DashBoardLayout"
+import DashBoardLayout, { loader as dashBoardLoader } from "./layout/DashboardLayout"
 import RootLayout, { rootLoader } from "./layout/RootLayout"
 import Taskform, { newTaskAction } from "./pages/Taskform"
 import Usertasks, { loader as taskLoader } from "./pages/Usertasks"
