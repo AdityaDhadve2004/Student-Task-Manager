@@ -23,7 +23,7 @@ const generateAccessAndRefreshTokens = async (userId) => {
         return { refreshToken, accessToken }
 
     } catch (error) {
-        console.log("TOKEN ERROR:", error) 
+        console.log("TOKEN ERROR:", error)
         throw new ApiError(500, error.message)
     }
 
@@ -32,7 +32,6 @@ const generateAccessAndRefreshTokens = async (userId) => {
 const registerUser = asyncHandler(
     async (req, res) => {
         const { username, email, password, } = req.body;
-        console.log(req.body)
 
         if (!username || !email || !password) {
             throw new ApiError(400, "All fields are required")
@@ -54,10 +53,8 @@ const registerUser = asyncHandler(
             throw new ApiError(400, "Avatar file is required")
 
         }
-        console.log(avatarLocalePath)
 
         const avatarUrl = await uploadOnCloudinary(avatarLocalePath)
-        console.log(avatarUrl.url)
 
         if (!avatarUrl) {
             throw new ApiError(400, "Avatar file is not uploaded")
@@ -68,7 +65,7 @@ const registerUser = asyncHandler(
             email,
             password,
             avatar: avatarUrl.url
-        
+
         })
 
         const registeredUser = await User.findById(user._id).select("-password")
@@ -89,10 +86,9 @@ const loginUser = asyncHandler(
     async (req, res) => {
 
         const { email, password } = req.body;
-        console.log(req.body, email)
 
         const user = await User.findOne({ email });
-       
+
         if (!user) {
             throw new ApiError(404, "User does not exist")
         }
@@ -110,9 +106,8 @@ const loginUser = asyncHandler(
 
         const options = {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax"
-
+            secure: true,
+            sameSite: "none"
         }
 
         return res
@@ -150,7 +145,7 @@ const logoutUser = asyncHandler(
             req.user._id,
             {
                 $unset: {
-                    refreshToken: 1 
+                    refreshToken: 1
                 }
             },
             {
