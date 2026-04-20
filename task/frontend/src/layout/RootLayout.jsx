@@ -4,7 +4,7 @@ export async function rootLoader() {
 
     const res = await authUser()
     console.log("ROOT LOADER RUNNING")
-    console.log(res)
+    console.log(res.json())
 
     console.log("STATUS:", res.status)
     if (!res.ok) {

@@ -8,7 +8,7 @@ const createTask = asyncHandler(
     async (req, res) => {
 
         const { title, description, date, priority, time } = req.body;
-        console.log(req.body);
+        
 
         const task = await Task.create({
             title,
@@ -175,7 +175,6 @@ const deleteTask = asyncHandler(
 
         if (!id) {
             throw new ApiError(400, "Invalid TaskId")
-
         }
 
         const task = await Task.findById(taskId)
@@ -208,7 +207,6 @@ const deleteTask = asyncHandler(
 const toggleTaskStatus = asyncHandler(
     async (req, res) => {
         const { taskId } = req.body
-        console.log(taskId);
 
         const valid = isValidObjectId(taskId)
 
